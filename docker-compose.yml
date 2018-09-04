@@ -1,0 +1,32 @@
+version: '2'
+services:
+    db.postgres:
+        container_name: post
+        image: postgres:9.4
+        volumes:
+          - ./psql-data:/var/lib/postgresql/data
+        environment:
+          - POSTGRES_USER=crmuser
+          - POSTGRES_PASSWORD=password
+          - POSTGRES_DB=crm
+        ports:
+          - '5432:5432'
+    django:
+        container_name: django_server
+        build:
+          context: ..
+          dockerfile: Docker/Dockerfile
+        image: owncrm
+        stdin_open: true
+        volumes:
+          - ../crm:/project
+        ports:
+          - '8000:8000'
+        depends_on:
+          - db.postgres
+volumes:
+    postgres_data:
+
+
+
+
