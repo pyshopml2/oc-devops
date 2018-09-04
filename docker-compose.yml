@@ -15,7 +15,7 @@ services:
         container_name: django_server
         build:
           context: ..
-          dockerfile: Docker/Dockerfile
+          dockerfile: ./oc-backend/Docker/Dockerfile
         image: owncrm
         stdin_open: true
         volumes:
@@ -24,6 +24,17 @@ services:
           - '8000:8000'
         depends_on:
           - db.postgres
+    front:
+        container_name: front
+        build:
+          context: ..
+          dockerfile: ./oc-frontend/Dockerfile
+        image: owncrm
+        stdin_open: true
+        volumes:
+          - ../app
+        ports:
+          - '3000:3000'
 volumes:
     postgres_data:
 
